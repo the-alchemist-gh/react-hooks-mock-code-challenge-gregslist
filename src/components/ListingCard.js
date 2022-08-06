@@ -1,21 +1,32 @@
-import React from "react";
+import React,{useState} from "react";
 
-function ListingCard() {
+function ListingCard({cardData, deleteItem}) {
+  const [btnClick, setBtnClick] = useState(false)
+
+  function handleClick(){
+    setBtnClick(btnClick=>!btnClick)
+  }
+
+  function handleDelete(){
+    
+    deleteItem(cardData.id)
+  }
+
   return (
     <li className="card">
       <div className="image">
         <span className="price">$0</span>
-        <img src={"https://via.placeholder.com/300x300"} alt={"description"} />
+        <img src={cardData.image} alt={cardData.description} />
       </div>
       <div className="details">
-        {true ? (
-          <button className="emoji-button favorite active">★</button>
+        {btnClick ? (
+          <button onClick={handleClick} className="emoji-button favorite active">★</button>
         ) : (
-          <button className="emoji-button favorite">☆</button>
+          <button onClick={handleClick} className="emoji-button favorite">☆</button>
         )}
-        <strong>{"description"}</strong>
-        <span> · {"location"}</span>
-        <button className="emoji-button delete">🗑</button>
+        <strong>{cardData.description}</strong>
+        <span> · {cardData.location}</span>
+        <button onClick={handleDelete} className="emoji-button delete">🗑</button>
       </div>
     </li>
   );
